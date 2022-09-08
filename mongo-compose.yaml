@@ -1,9 +1,17 @@
 version: "3.1"
 services:
+  my-app:
+    image: my-app:1.0 # change this your docker registry uri
+    # image: 492283524005.dkr.ecr.us-east-1.amazonaws.com/my-app:1.0 # change this your docker registry uri
+    ports:
+      - 3000:3000
+
   mongodb:
     image: mongo
     ports:
       - 27017:27017
+    volumes:
+      - db-data:/data/db
     environment:
       - MONGO-INITDB_ROOT_USERNAME=admin
       - MONGO-INITDB_ROOT_PASSWORD=pass
@@ -20,3 +28,6 @@ services:
       - ME_CONFIG_MONGODB_ENABLE_ADMIN=true
     depends_on:
       - mongodb
+volumes:
+  db-data:
+    driver: local
